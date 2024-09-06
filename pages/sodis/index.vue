@@ -4,13 +4,13 @@
     <h6>Опрашиваемый сервер:</h6>
     <div>
       <code class="text-xl text-indigo-500">{{
-        `${PROTOCOL}://${BASEURL}${(PORT === 80 || PORT === null) ? "" : ":" + PORT}/disp`
+        buildEndpoint()
       }}</code
       ><br />
       <small>(можно изменить в <code>./constants/sodis.js</code>)</small>
     </div>
   </div>
-  <div class="grid grid-cols-2 mt-3">
+  <div class="grid grid-cols-2 mt-5">
     <div class="px-3">
       <UInput class="mt-2" type="text" name="ds" v-model="ds" />
       <UInput class="mt-2" type="text" name="df" v-model="df" />
@@ -28,64 +28,25 @@
 </template>
 
 <script setup>
-import { BASEURL, PROTOCOL, PORT } from "~/constants/sodis";
+import { buildEndpoint } from '~/helpers/sodis';
+
+
 
 const ds = ref("28.01.2025");
 const df = ref("03.02.2025");
 const rq = ref({});
-// const data = {
-//   s: "json_rq2",
-//   ds: ds.value,
-//   df: df.value,
-//   adults: 2,
-//   childs: "",
-//   class: 1,
-//   cityFromCode: 17089,
-//   calcVisa: 1,
-//   calcTransfer: 1,
-//   calcInsurance: 1,
-// };
 
 const handleGetRq = async () => {
   const res = await $fetch("api/sodis/getrq");
   rq.value = res;
-
-  // const res = await $fetch("https://www.sodis.ru/disp", {
-  //   method: "GET",
-  //   server: false,
-  //   query: {
-  //     s: "json_rq2",
-  //   },
-  // });
-  // rq.value = res;
-
-  // const event = useRequestEvent()
-  // const { data: res } = await useAsyncData(() => fetchWithCookie(event, "https://www.sodis.ru/disp?s=json_rq2"))
-
-  // console.log("handleGetRq", rq.value);
 };
 
 const handleSetRq = async () => {
-  // const res = await $fetch.raw("https://www.sodis.ru/disp", {
-  //   method: "GET",
-  //   server: false,
-  //   query: data,
-  // });
-  // rq.value = res._data;
-
   const res = await $fetch(`api/sodis/setrq?ds=${ds.value}&df=${df.value}`);
   rq.value = res;
-
-  // console.log(res);
-  console.log("handleSetRq", rq.value);
 };
-
-// onMounted(() => console.log(document.cookie))
 
 onMounted(async () => {
   handleGetRq();
-
-  // const res = await fetch(`https://www.sodis.ru/disp?s=json_rq2`);
-  // rq.value = await res.json();
 });
 </script>
