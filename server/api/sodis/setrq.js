@@ -1,3 +1,5 @@
+import { BASEURL, PROTOCOL, PORT} from "~/constants/sodis";
+
 export default defineEventHandler(async (event) => {
 
     const { ds, df } = getQuery(event);
@@ -16,8 +18,8 @@ export default defineEventHandler(async (event) => {
         calcTransfer: 1,
         calcInsurance: 1,
     };
-
-    const res = await $fetch("http://localhost:8080/disp", {
+    const endpoint = `${PROTOCOL}://${BASEURL}:${PORT}/disp`;
+    const res = await $fetch(endpoint, {
         method: "GET",
         query: data,
         headers: {
