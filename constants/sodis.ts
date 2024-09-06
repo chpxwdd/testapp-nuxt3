@@ -1,3 +1,3 @@
-export const PROTOCOL = "http";
+export const PROTOCOL = "https";
 export const BASEURL = "www.sodis.ru";
-export const PORT = 80;
+export const PORT = null;

@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
         calcTransfer: 1,
         calcInsurance: 1,
     };
-    const endpoint = `${PROTOCOL}://${BASEURL}:${PORT}/disp`;
+    const endpoint = `${PROTOCOL}://${BASEURL}${(PORT === 80 || PORT === null) ? "" : ":" + PORT}/disp`;
     const res = await $fetch(endpoint, {
         method: "GET",
         query: data,

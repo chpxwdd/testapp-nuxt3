@@ -3,8 +3,8 @@
   <div class="p-2">
     <h6>Опрашиваемый сервер:</h6>
     <div>
-      <code class="text-xl">{{
-        `${PROTOCOL}://${BASEURL}${PORT == 80 ? "" : ":" + PORT}/disp`
+      <code class="text-xl text-indigo-500">{{
+        `${PROTOCOL}://${BASEURL}${(PORT === 80 || PORT === null) ? "" : ":" + PORT}/disp`
       }}</code
       ><br />
       <small>(можно изменить в <code>./constants/sodis.js</code>)</small>
