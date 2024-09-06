@@ -1,10 +1,14 @@
-import { BASEURL, PROTOCOL, PORT} from "~/constants/sodis";
+import { BASEURL, PROTOCOL, PORT } from "~/constants/sodis";
 
 export default defineEventHandler(async (event) => {
 
     const { ds, df } = getQuery(event);
     const cookies = parseCookies(event)
     console.log("setrq.js parseCookies(event):", cookies['JSESSIONID']);
+    // if (!cookies['JSESSIONID']) {
+
+    //     cookies['JSESSIONID'] = '667e0b5f6efbed29f2600ccc1fd5'
+    // }
 
     const data = {
         s: "json_rq2",
@@ -23,7 +27,10 @@ export default defineEventHandler(async (event) => {
         method: "GET",
         query: data,
         headers: {
-            cookie: `JSESSIONID=${cookies['JSESSIONID']}`
+            cookie: `JSESSIONID=${cookies['JSESSIONID']}; Path=/; HttpOnly;`
+            // cookie: !cookies['JSESSIONID']
+            //     ? `JSESSIONID=667e0b5f6efbed29f2600ccc1fd5; Path=/; HttpOnly;`
+            //     : `JSESSIONID=${cookies['JSESSIONID']}; Path=/; HttpOnly;`
         }
     });
 
