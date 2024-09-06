@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
       s: 'json_rq2'
     },
     headers:{
-      // cookie: `JSESSIONID=1e611706fdee1f178a81738b5c80;`
+    
       cookie: `JSESSIONID=${eventCookies['JSESSIONID']};`
     }
   })
