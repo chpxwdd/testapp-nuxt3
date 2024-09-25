@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@nuxt/ui": "^2.15.2",
+    "@yandex/ymaps3-types": "^0.0.28",
     "axios": "^1.7.4",
     "nuxt": "^3.11.2",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vue-yandex-maps": "^2.1.4"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.0",

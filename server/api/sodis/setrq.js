@@ -4,6 +4,7 @@ export default defineEventHandler(async (event) => {
 
     const { ds, df } = getQuery(event);
     const cookies = parseCookies(event)
+    console.log("eventCookie", cookies)
     console.log("setrq.js parseCookies(event):", cookies['JSESSIONID']);
     
     const data = {

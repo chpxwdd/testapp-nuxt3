@@ -2,6 +2,7 @@
 import Topnav from '~/components/Page/Topnav.vue';
 </script>
 <template>
+    <NuxtLoadingIndicator/>
   <div class="flex flex-col h-screen ">
     <Topnav/>    
     <main class="mb-auto">
