@@ -166,14 +166,13 @@ const handleCluster = (cl) => {
   position: relative;
   background: white;
   border: 1px solid #fff;
-
   white-space: nowrap;
   text-align: left;
   color: #393939;
   font-size: 0.6rem;
   // width: 100px;
   text-align: left;
-  padding: 2px;
+  padding: 0.5rem;
   border: 1px solid #999;
   border-radius: 3px;
   cursor: pointer;
