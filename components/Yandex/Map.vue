@@ -2,7 +2,7 @@
   <div>
     <yandex-map height="600px" width="100%" :settings="{
       location: {
-        center: [hotels[0].lng, hotels[0].lat],
+        center: hotels[0].coordinates,
         zoom: 9,
         duration: 0,
       }
@@ -11,12 +11,14 @@
       <yandex-map-default-features-layer />
 
       <template v-for="(marker, markerIndex) in hotels" :key="markerIndex">
-        <yandex-map-marker v-if="marker.lng || marker.lat" :settings="{
+        <yandex-map-marker :settings="{
           onClick: () => (openMarker = markerIndex),
           zIndex: openMarker === markerIndex ? 1 : 0,
-          coordinates: [marker.lng, marker.lat],
+          coordinates: marker.coordinates,
           title: `от ${marker.priceFrom} ${marker.currency}`,
           properties: {
+            rating: marker.rating,
+            stars: marker.stars,
             priceFrom: marker.priceFrom,
             currency: marker.currency,
           },
@@ -26,16 +28,19 @@
             от {{ formatNumberWithSpaces(marker.priceFrom) }}
             {{ marker.currency }}
 
-            <div v-if="openMarker === markerIndex" class="popup" @click.stop="openMarker = null">
-              {{ marker.name }}
+            <div class="popup" v-if="openMarker === markerIndex" @click.stop="openMarker = null">
+              <div class="rating">
+                <span class="star" v-for="star in marker.stars" :key="star">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="7" height="7" viewBox="0 0 7 7">
+                    <path class="_fillpath" fill="#C79234"
+                      d="M3.5 0l1.2 2.2 2.3.5-1.6 1.8.3 2.5-2.2-1.1L1.3 7l.3-2.5L0 2.7l2.3-.5L3.5 0"></path>
+                  </svg>
+                </span>
+              </div>
+              <div>{{ marker.name }}</div>
             </div>
+            <!-- <div>{{ marker.rating }}</div> -->
           </div>
-
-          <!-- <div class="hotel">
-            <div class="priceFrom">
-              {{ formatNumberWithSpaces(marker.priceFrom) }}
-            </div>
-          </div> -->
         </yandex-map-marker>
       </template>
     </yandex-map>
@@ -100,12 +105,11 @@ const handleCluster = (cl) => {
   border: 1px solid #fff;
   white-space: nowrap;
   text-align: left;
-  color: #393939;
+  color: #282828;
   font-size: 0.6rem;
-  font-weight: bold;
-  // width: 100px;
+  font-weight: 400;
   text-align: left;
-  padding: 0.25rem;
+  padding: 0.15rem;
   border: 1px solid #999;
   border-radius: 3px;
   cursor: pointer;
@@ -115,17 +119,27 @@ const handleCluster = (cl) => {
   background: #e3e3d3;
 }
 
+.rating {
+  display: flex;
+}
+
+.star {
+  height: 10px;
+  width: 10px;
+}
+
 .popup {
-  position: relative;
-  top: calc(100% + 3px);
-  border-top: 1px solid #ccc;
-  // background: #ddd;
-  margin-top: 0.25rem;
-  padding: 0.15rem 0.25rem;
-  font-size: 10px;
-  color: black;
+  position: absolute;
+  top: calc(100% - 3px);
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  background: #eee;
+  padding: 0.25rem;
+  font-size: 0.75rem;
+  color: brown;
   text-align: left;
-  font-weight: normal;
+  font-weight: 600;
   white-space: nowrap;
+  min-width: 200px;
 }
 </style>
