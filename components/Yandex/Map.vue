@@ -1,11 +1,13 @@
 <template>
-  <div>
+  <div class="map-wrapper">
+
+    <YandexMapCard v-if="openMarker" :hotel="hotels[openMarker]" />
     <yandex-map height="600px" width="100%" :settings="{
       location: {
         center: hotels[0].coordinates,
         zoom: 9,
         duration: 0,
-      }
+      },
     }">
       <yandex-map-default-scheme-layer />
       <yandex-map-default-features-layer />
@@ -16,29 +18,11 @@
             zIndex: openMarker === markerIndex ? 1 : 0,
             coordinates: marker.coordinates,
             title: `от ${marker.priceFrom} ${marker.currency}`,
-            properties: {
-              rating: marker.rating,
-              stars: marker.stars,
-              priceFrom: marker.priceFrom,
-              currency: marker.currency,
-            },
-            popup: { position: 'top' },
           }">
-            <div class="hotel">
+            <div class="hotel-marker">
               от {{ formatNumberWithSpaces(marker.priceFrom) }}
               {{ marker.currency }}
-
-              <div class="popup" v-if="openMarker === markerIndex" @click.stop="openMarker = null">
-                <div class="rating">
-                  <span class="star" v-for="star in marker.stars" :key="star">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="7" height="7" viewBox="0 0 7 7">
-                      <path class="_fillpath" fill="#C79234"
-                        d="M3.5 0l1.2 2.2 2.3.5-1.6 1.8.3 2.5-2.2-1.1L1.3 7l.3-2.5L0 2.7l2.3-.5L3.5 0"></path>
-                    </svg>
-                  </span>
-                </div>
-                <div>{{ marker.name }}</div>
-              </div>
+              <YandexMapPopup :marker="marker" :markerIndex="markerIndex" :openMarker="openMarker" />
             </div>
           </yandex-map-marker>
         </template>
@@ -56,41 +40,22 @@
 import {
   YandexMap,
   YandexMapDefaultFeaturesLayer,
-  YandexMapDefaultMarker,
   YandexMapClusterer,
   YandexMapMarker,
   YandexMapDefaultSchemeLayer,
 } from "vue-yandex-maps";
+import { formatNumberWithSpaces } from "~/helpers/utils";
 
 const props = defineProps({
-  coords: {
-    type: Array,
-    default: () => [],
-  },
   hotels: {
     type: Array,
     default: () => [],
   },
 });
 
-const handleClick = (event) => console.log(event);
 
-const formatNumberWithSpaces = (number) => {
-  return number?.toLocaleString("en-US").replace(/,/g, " ");
-};
+const openMarker = shallowRef(null);
 
-// console.log("props.hotels", props.hotels);
-
-const activeHotel = shallowRef(1);
-const isLocationSelected = shallowRef(false);
-
-const openMarker = ref(null);
-
-const openHotelCard = (index, cords) => {
-  activeHotel.value = index;
-  isLocationSelected.value = true;
-  lastHotelCords.value = cords;
-};
 
 const handleCluster = (cl) => {
   return cl.features.reduce((min, { properties }) => {
@@ -102,6 +67,11 @@ const handleCluster = (cl) => {
 </script>
 
 <style scoped lang="scss">
+.map-wrapper {
+  position: relative;
+
+}
+
 .cluster {
   cursor: pointer;
   display: flex;
@@ -111,7 +81,6 @@ const handleCluster = (cl) => {
   white-space: nowrap;
   padding: 0.15rem 0.5rem;
   border-radius: 3px;
-  // height: 22px;
   border: 1px solid #5c4343;
   background: #a08e8e;
   color: #fff;
@@ -124,7 +93,7 @@ const handleCluster = (cl) => {
   }
 }
 
-.hotel {
+.hotel-marker {
   position: relative;
   background: white;
   border: 1px solid #fff;
@@ -139,32 +108,8 @@ const handleCluster = (cl) => {
   border-radius: 3px;
   cursor: pointer;
 
-  .rating {
-    display: flex;
-
-    .star {
-      height: 10px;
-      width: 10px;
-    }
-  }
-
   &:hover {
     background: #e3e3d3;
   }
-}
-
-.popup {
-  position: absolute;
-  top: calc(100% - 3px);
-  border: 1px solid #ead0d0;
-  border-radius: 3px;
-  background: #eee;
-  padding: 0.25rem;
-  font-size: 0.75rem;
-  color: brown;
-  text-align: left;
-  font-weight: 600;
-  white-space: nowrap;
-  min-width: 200px;
 }
 </style>

@@ -10,10 +10,12 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/image": "^1.8.0",
     "@nuxt/ui": "^2.15.2",
     "@yandex/ymaps3-types": "^0.0.28",
     "axios": "^1.7.4",
     "nuxt": "^3.11.2",
+    "swiper": "^11.0.5",
     "nuxt-app": "file:",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",

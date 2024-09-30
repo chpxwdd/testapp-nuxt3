@@ -2,7 +2,7 @@ import { buildEndpoint } from "~/helpers/sodis";
 
 export default defineEventHandler(async (event) => {
   // const { countryId } = getQuery(event);
-  console.log("hotels.js for countryId:", 102);
+  // console.log("hotels.js for countryId:", 102);
 
   const res = await $fetch(buildEndpoint(), {
     method: "GET",
@@ -21,6 +21,7 @@ export default defineEventHandler(async (event) => {
       rating: item.starrating,
       stars: item.starcode,
       coordinates: [item.lng, item.lat],
+      images: item.images.map((image) => image.id),
     };
   });
 
