@@ -13,6 +13,14 @@ export default defineEventHandler(async (event) => {
     headers: {
       cookie: `JSESSIONID=${eventCookies['JSESSIONID']};`
     },
+    onResponse({ response }) {
+        const cookies = response.headers.getSetCookie();
+        if (!cookies.length) return
+        cookies.forEach((cookie) => {
+            if (!event) return
+            appendResponseHeader(event, 'set-cookie', cookie);
+        });
+    }
   })
 
   return res
