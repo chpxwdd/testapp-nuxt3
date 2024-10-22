@@ -7,7 +7,7 @@ import Topnav from "~/components/Page/Topnav.vue";
     <Topnav />
     <main class="mb-auto">
       <div class="container mx-auto mt-4">
-        <SodisNav />
+        <!-- <SodisNav /> -->
         <slot />
       </div>
     </main>

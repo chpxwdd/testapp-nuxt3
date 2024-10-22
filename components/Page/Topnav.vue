@@ -33,10 +33,15 @@ const guestLinks = [
     to: "/",
   },
   {
-    label: "Sodis Feature",
+    label: "Cookies",
     icon: "i-heroicons-pencil",
-    to: "/sodis",
+    to: "/sodis/cookie",
   },
+  // {
+  //   label: "Sodis Feature",
+  //   icon: "i-heroicons-pencil",
+  //   to: "/sodis",
+  // },
 ];
 
 const authLinks = guestLinks.concat([

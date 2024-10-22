@@ -37,12 +37,12 @@ const df = ref("03.02.2025");
 const rq = ref({});
 
 const handleGetRq = async () => {
-    const res = await $fetch("api/sodis/getrq");
+    const res = await $fetch("/api/sodis/getrq");
     rq.value = res;
 };
 
 const handleSetRq = async () => {
-    const res = await $fetch(`api/sodis/setrq?ds=${ds.value}&df=${df.value}`);
+    const res = await $fetch(`/api/sodis/setrq?ds=${ds.value}&df=${df.value}`);
     rq.value = res;
 };
 
