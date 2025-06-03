@@ -1,13 +1,19 @@
-import { createApiServer } from '../../../utils/fetchCookie'
+
+import { buildEndpoint } from "~/helpers/sodis";
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
-  const apiServer = createApiServer(event)
-  return await apiServer('/disp', {
+
+  const res = await $fetch.raw(buildEndpoint(), {
     method: 'GET',
     query: {
-      s: 'json_country',
-      id,
+      s: "json_country",
+      id
     },
-  })
+    credentials: 'same-origin',
+    server: false
+  });
+
+  return res
+
 })
