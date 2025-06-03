@@ -1,5 +1,7 @@
 <template>
   <PageTitle title="Simple" lead="Swiper"/>
+  
+    <WidgetSwiper/>
 </template>
 
 <script setup>
