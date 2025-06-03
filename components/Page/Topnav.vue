@@ -37,11 +37,11 @@ const guestLinks = [
     icon: "i-heroicons-pencil",
     to: "/sodis/cookie",
   },
-  // {
-  //   label: "Sodis Feature",
-  //   icon: "i-heroicons-pencil",
-  //   to: "/sodis",
-  // },
+  {
+    label: "Secure pages",
+    icon: "i-heroicons-secure",
+    to: "/sodis/secure",
+  },
 ];
 
 const authLinks = guestLinks.concat([

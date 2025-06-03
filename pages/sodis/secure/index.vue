@@ -10,13 +10,15 @@
 const forums = ref([]);
 const id = ref(1);
 
-const handleGetForums = async () => {
+// console.log("/api/sodis/forum")
 
+const handleGetForums = async () => {
+console.log("/api/sodis/forum")
   const res = await $fetch("/api/sodis/forum");
   rq.value = res;
 }
 
-handleGetForums();
+ handleGetForums();
 
 
 </script>
